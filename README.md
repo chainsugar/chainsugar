@@ -1,2 +1,3 @@
 # chainsugar
-Hello World
+
+Authors: Bryan, David, and Mokhtar.
