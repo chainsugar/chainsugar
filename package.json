@@ -1,0 +1,32 @@
+{
+  "name": "chainsugar",
+  "description": "Hello World",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/brysayson/chainsugar.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/brysayson/chainsugar/issues"
+  },
+  "homepage": "https://github.com/brysayson/chainsugar",
+  "dependencies": {
+    "body-parser": "^1.13.1",
+    "connect-mongo": "^0.8.1",
+    "ejs": "^2.3.1",
+    "express": "^4.12.4",
+    "express-partials": "^0.3.0",
+    "express-session": "^1.11.3",
+    "grunt": "^0.4.5",
+    "mongoose": "^4.0.5",
+    "nodemon": "^1.3.7",
+    "passport": "^0.2.2",
+    "underscore": "^1.8.3"
+  }
+}
