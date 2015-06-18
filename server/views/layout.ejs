@@ -11,7 +11,7 @@
     <link href="//bootswatch.com/superhero/bootstrap.min.css" rel="stylesheet">
 
      <!-- OUR css -->
-    <link href="assets/style.css" rel="stylesheet">
+    <link href="assets/styles.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -20,16 +20,15 @@
       <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body>
-    <div class="jumbotron">
-      <h1>Task Bunny</h1>
-        <p>Get that much needed help.</p>
-        <p><a class="btn btn-primary btn-lg">Learn more</a></p>
-    </div>
+  <body ng-app="trApp">
     <%- body %>
     <script src="dist/jquery/dist/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src="dist/angular/angular.min.js"></script>
     <script src="dist/angular-route/angular-route.min.js"></script>
+    <script src="app/app.module.js"></script>
+    <script src="app/app.routes.js"></script>
+    <script src="app/components/landing/landingController.js"></script>
+    <script src="app/components/landing/landingService.js"></script>
   </body>
 </html>
