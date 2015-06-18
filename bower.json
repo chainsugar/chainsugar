@@ -1,11 +1,7 @@
 {
   "name": "chainsugar",
   "version": "0.0.0",
-  "homepage": "https://github.com/brysayson/chainsugar",
-  "authors": [
-    "bryan <bry_angelo@yahoo.com>"
-  ],
-  "license": "MIT",
+  "homepage": "https://github.com/chainsugar/chainsugar",
   "ignore": [
     "**/.*",
     "node_modules",
@@ -16,6 +12,7 @@
   "dependencies": {
     "angular": "~1.4.1",
     "jquery": "~2.1.4",
-    "underscore": "~1.8.3"
+    "underscore": "~1.8.3",
+    "angular-route": "~1.4.1"
   }
 }
