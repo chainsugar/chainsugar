@@ -5,7 +5,7 @@
     .config(function($routeProvider) {
     
       $routeProvider.when('/', {
-          templateUrl: app/components/landing/landing.html,
+          templateUrl: 'app/components/landing/landing.html',
           controller: 'LandingPageController'
       })
       .otherwise({redirectTo: '/'});

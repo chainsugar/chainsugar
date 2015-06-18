@@ -1,1 +1,1 @@
-angular.module('trApp', ['ngRoutes']);
+angular.module('trApp', ['ngRoute']);
