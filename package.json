@@ -1,21 +1,16 @@
 {
   "name": "chainsugar",
-  "description": "Hello World",
+  "description": "Task Bunny",
   "version": "1.0.0",
-  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "./node_modules/.bin/nodemon server/server.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/brysayson/chainsugar.git"
+    "url": "https://github.com/chainsugar/chainsugar.git"
   },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/brysayson/chainsugar/issues"
-  },
-  "homepage": "https://github.com/brysayson/chainsugar",
+  "homepage": "https://github.com/chainsugar/chainsugar",
   "dependencies": {
     "body-parser": "^1.13.1",
     "connect-mongo": "^0.8.1",

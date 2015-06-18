@@ -1,11 +1,7 @@
 {
   "name": "chainsugar",
   "version": "0.0.0",
-  "homepage": "https://github.com/brysayson/chainsugar",
-  "authors": [
-    "bryan <bry_angelo@yahoo.com>"
-  ],
-  "license": "MIT",
+  "homepage": "https://github.com/chainsugar/chainsugar",
   "ignore": [
     "**/.*",
     "node_modules",
