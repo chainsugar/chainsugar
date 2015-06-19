@@ -2,9 +2,9 @@
 
   //load module
   angular.module('trApp')
-    .factory('LandingService', ['$http', TaskFormService]);
-      
-  function TaskFormService($http)  
+    .factory('TaskFormService', ['$http', TaskFormService]);
+
+  function TaskFormService($http){
     return {
       addTask: function(form) {
         return $http({
@@ -20,7 +20,7 @@
           console.log(err);
         });
       }
-    }
+    };
   }
 
 })();
