@@ -3,6 +3,7 @@ var partials = require('express-partials');
 var bodyParser = require('body-parser');
 var path = require('path');
 var sessionAuth = require('./auth');
+var tasksAPI = require('./routes/tasks');
 
 var app = express();
 
@@ -14,6 +15,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 //authentication middle-ware
 sessionAuth(app);
+
+tasksAPI(app, express);
 
 //static content
 app.use(express.static(path.join(__dirname, "../client")));
