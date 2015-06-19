@@ -78,7 +78,9 @@ module.exports = function(app) {
     secret: SESSION_SECRET,
     store: new MongoStore({
       url: config.MONGODB_URL
-    })
+    }),
+    resave: false,
+    saveUninitialized: false
   }));
 
   app.use(passport.initialize());
