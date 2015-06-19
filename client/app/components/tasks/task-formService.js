@@ -9,12 +9,10 @@
       addTask: function(form) {
         return $http({
           method: 'POST',
-          url: 'http://example.com/api/mokhtar',
-          // headers: {
-          // 'Content-Type': undefined
-          // },
+          url: '/api/tasks',
           data: form
         }).success(function(response){
+          console.log("created new task:", response.data);
           return response.data;
         }).error(function(err){
           console.log(err);
