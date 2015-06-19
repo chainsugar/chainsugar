@@ -15,7 +15,7 @@ module.exports = function(grunt) {
       },
       dist: {
         src: ['client/app/components/**/*.js'],
-        dest: 'client/assets/main-concat.js',
+        dest: 'client/dist/main-concat.js',
       },
     }
 
