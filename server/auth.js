@@ -1,6 +1,7 @@
 var config = require('./config.js');
 var fs = require('fs');
 var path = require('path');
+var User = require('./db').User;
 
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
@@ -52,12 +53,22 @@ passport.use(new GoogleStratergy({
       callbackURL: GOOGLE_SECRETS.url
     },
     function(accessToken, refreshToken, profile, done) {
-      /* todo: store user in database
-      User.findOrCreate({ googleId: profile.id }, function (err, user) {
-        return done(err, user);
+      User.findOne({ googleId: profile.id }).exec(function (err, user) {
+        //user previously logged into our app and is saved in our db
+        if(user) {
+          done(null, user);
+        }else{
+          //first time user is logging in
+          user = new User({
+            name: profile.displayName,
+            googleId: profile.id
+          });
+          //create and save new user
+          user.save(function(err, user){
+            done(err, user);
+          });
+        }
       });
-      */
-      done(null, profile);
     }
 ));
 
@@ -67,7 +78,9 @@ module.exports = function(app) {
     secret: SESSION_SECRET,
     store: new MongoStore({
       url: config.MONGODB_URL
-    })
+    }),
+    resave: false,
+    saveUninitialized: false
   }));
 
   app.use(passport.initialize());
@@ -96,9 +109,9 @@ module.exports = function(app) {
   //api to check on client side if session is authenticated
   app.get('/auth/google/check', function(req, res, next){
     if(req.isAuthenticated()){
-      res.status(200).send({authenticated:true});
+      res.status(200).send(req.user);
     } else {
-      res.status(401).send({authenticated:false});
+      res.status(401).end();
     }
   });
 
