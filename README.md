@@ -13,11 +13,11 @@ Create a project at https://console.developers.google.com <br>
 * Under APIs and auth 
   * Credentials
     1. create a new client ID for a 'Web Application'
-    2. you will have to provide a callback URL under Redirect URIs, make sure it is identical to your `google.json`
+    2. you will have to provide a callback URL under Redirect URIs, make sure it is identical in your `google.json`
     3. for development http://localhost:8000/auth/google/callback/
     4. in production http://www.yourdomain.com/auth/google/callback/
   * APIs 
-    1. Under Social APIs enable the Google+ API [See passport-google-oauth Issue](https://github.com/jaredhanson/passport-google-oauth/issues/72)
+    1. Under Social APIs enable the Google+ API. [(See passport-google-oauth Issue)](https://github.com/jaredhanson/passport-google-oauth/issues/72)
 
 make a note of the client ID and Client secret.
 
