@@ -7,9 +7,8 @@ var MongoStore = require('connect-mongo')(session);
 var SESSION_SECRET;
 
 var passport = require('passport');
-var GoogleStratergy  = require('passport-google-oauth').OAuth2Strategy;
+var GoogleStrategy  = require('passport-google-oauth').OAuth2Strategy;
 var GOOGLE_SECRETS;
-
 
 if(process.env.NODE_ENV === 'production' ) {
   //store the client id and secret in environment variable
@@ -46,7 +45,7 @@ passport.deserializeUser(function(obj, done) {
   done(null, obj);
 });
 
-passport.use(new GoogleStratergy({
+passport.use(new GoogleStrategy({
       clientID: GOOGLE_SECRETS.id,
       clientSecret: GOOGLE_SECRETS.secret,
       callbackURL: GOOGLE_SECRETS.url
