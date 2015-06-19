@@ -2,9 +2,9 @@
 
 //load module
 angular.module('trApp')
-  .controller('LandingPageController', ['$scope', '$location', LandingPageController]);
-    
-function LandingPageController(){
+  .controller('LoginPageController', ['$scope', '$location', LandingPageController]);
+  
+function LoginPageController(){
   }
 
 })();
