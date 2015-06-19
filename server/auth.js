@@ -1,4 +1,6 @@
 var config = require('./config.js');
+var fs = require('fs');
+var path = require('path');
 
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
@@ -13,16 +15,27 @@ if(process.env.NODE_ENV === 'production' ) {
   //store the client id and secret in environment variable
   GOOGLE_SECRETS = {
     id: process.env.GOOGLE_APP_ID,
-    secret: process.env.GOOGLE_APP_SECRET
+    secret: process.env.GOOGLE_APP_SECRET,
+    url: process.env.GOOGLE_APP_CALLBACK_URL
   };
 
   //a long text string for signing session cookies
   SESSION_SECRET = process.env.SESSION_SECRET;
 } else {
 
-  //for local dev store client id and secret in these files
-  GOOGLE_SECRETS = require('../secrets/google.json');
-  SESSION_SECRET = require('../secrets/session.json').secret;
+  try {
+    GOOGLE_SECRETS = require('../secrets/google.json');
+  } catch(e) {
+    console.error("== Warning == missing 'secrets/google.json' file. == see README");
+    process.exit();
+  }
+
+  try {
+    SESSION_SECRET = require('../secrets/session.json').secret;
+  } catch (e) {
+    SESSION_SECRET = "w34587230598dflskjf";//default
+  }
+
 }
 
 passport.serializeUser(function(user, done) {
@@ -36,7 +49,7 @@ passport.deserializeUser(function(obj, done) {
 passport.use(new GoogleStratergy({
       clientID: GOOGLE_SECRETS.id,
       clientSecret: GOOGLE_SECRETS.secret,
-      callbackURL: "http://localhost:8000/auth/google/callback/"
+      callbackURL: GOOGLE_SECRETS.url
     },
     function(accessToken, refreshToken, profile, done) {
       /* todo: store user in database
