@@ -11,9 +11,8 @@
           method: 'POST',
           url: '/api/tasks',
           data: form
-        }).success(function(response){
-          console.log("created new task:", response.data);
-          return response.data;
+        }).success(function(task){
+          return task;
         }).error(function(err){
           console.log(err);
         });
