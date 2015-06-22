@@ -50,6 +50,6 @@ module.exports = function(grunt) {
     'concat'
   ]);
 
-  grunt.registerTask('default', ['concurrent:dev']);
+  grunt.registerTask('default', ['build', 'concurrent:dev']);
 
 };
