@@ -9,7 +9,7 @@
 
     // http POST on form submit
     $scope.createTask = function(){
-      TaskFormService.addTask($scope.form);
+      TaskService.addTask($scope.form);
     };
 
     $scope.redirectCall = function() {
