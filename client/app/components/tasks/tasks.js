@@ -1,9 +1,9 @@
 (function(){
 
 angular.module('trApp')
-    .controller('TasksController', ['$scope', 'TaskFormService', TasksController]);
+    .controller('TasksController', ['$scope', 'TaskService', TasksController]);
 
-  function TasksController($scope, TaskFormService){
+  function TasksController($scope, TaskService){
    // make calls to TaskFormService to retrieve all tasks
    
   };

@@ -2,9 +2,9 @@
 
   //load module
   angular.module('trApp')
-    .factory('TaskFormService', ['$http', TaskFormService]);
+    .factory('TaskService', ['$http', TaskService]);
 
-  function TaskFormService($http){
+  function TaskService($http){
     return {
 
       addTask: function(form) {
