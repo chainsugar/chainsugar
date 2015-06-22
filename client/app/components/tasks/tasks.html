@@ -4,19 +4,21 @@
   <thead>
     <tr>
       <th>Owner</th>
-      <th>Cost</th>
       <th>Name</th>
       <th>City</th>
-      <th>Description</th>
+      <th>Cost</th>
+      <th>Applicants</th>
+      <th>Due Date</th>
     </tr>
   </thead>
   <tbody ng-controller="TasksController">
-    <tr ng-repeat="task in tasks">
+    <tr class="task" ng-repeat="task in tasks">
       <td> {{ task.owner }} </td>
-      <td> {{ task.information.cost }} </td>
       <td> {{ task.information.name }} </td>
       <td> {{ task.information.city }} </td>
-      <td> {{ task.information.description }} </td>
+      <td> {{ task.information.cost }} </td>
+      <td> {{ task.applicants.length }} </td>
+      <td> {{ task.information.deadline }} </td>
     </tr>
    </tbody>
 </table> 
