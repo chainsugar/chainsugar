@@ -1,2 +1,22 @@
 <div ng-include="'app/shared/navbar/navbar.html'"> </div>
 <!--this page should display all the tasks -->
+  <table class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th>Owner</th>
+      <th>Cost</th>
+      <th>Name</th>
+      <th>City</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody ng-controller="TasksController">
+    <tr ng-repeat="task in tasks">
+      <td> {{ task.owner }} </td>
+      <td> {{ task.information.cost }} </td>
+      <td> {{ task.information.name }} </td>
+      <td> {{ task.information.city }} </td>
+      <td> {{ task.information.description }} </td>
+    </tr>
+   </tbody>
+</table> 
