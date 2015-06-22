@@ -19,8 +19,12 @@
             controller: 'TaskFormController'
         })
         .when('/tasks', {
-            templateUrl: 'app/components/tasks/task-view.html',
+            templateUrl: 'app/components/tasks/tasks.html',
             controller: 'TaskFormController'
+        })
+        .when('/task/:id', {
+            templateUrl: 'app/components/tasks/task-view.html',
+            controller: 'TaskViewController'
         })
         .otherwise({redirectTo: '/'});
 
