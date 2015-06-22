@@ -10,7 +10,7 @@
             publicAccess: true
         })
         .when('/sign-in', {
-            templateUrl: 'app/components/log-in/log-in.html',
+            templateUrl: 'app/components/sign-in/sign-in.html',
             controller: 'LoginPageController',
             publicAccess: true
         })
