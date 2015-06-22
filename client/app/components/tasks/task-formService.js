@@ -21,6 +21,14 @@
 
       retrieveAllTasks: function(searchQuery) {
       // returns an array of tasks async
+        return $http({
+          method: 'GET',
+          url: '/api/tasks',
+        }).success(function(tasks){
+          return tasks;
+        }).error(function(err){
+          console.log(err);
+        });
       },
 
       retrieveUserTasks: function(searchQuery) {
