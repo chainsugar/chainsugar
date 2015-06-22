@@ -13,7 +13,7 @@
     };
 
     $scope.redirectCall = function() {
-      $location.path('/task-view');
+      $location.path('/tasks');
     };
   };
 
