@@ -18,6 +18,18 @@ module.exports = function(grunt) {
       }
     },
 
+    uglify: {
+      options: {
+        preserveComments: false,
+        beautify: true // for debugging purposes
+      },
+      dev: {
+        files: {
+          'client/dist/app.min.js': ['client/dist/app.js']
+        }
+      }
+    },
+
     concat: {
       options: {
         separator: ';',
@@ -42,12 +54,14 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-nodemon');
   grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-concurrent');
 
   //gets run on server deployment
   grunt.registerTask('build', [
-    'concat'
+    'concat',
+    'uglify'
   ]);
 
   grunt.registerTask('default', ['build', 'concurrent:dev']);
