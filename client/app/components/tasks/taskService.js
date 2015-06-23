@@ -56,12 +56,12 @@
         });
       },
 
-      updateTask: function(taskId) {
+      updateTask: function(taskId, information) {
       // changing description of a task
         return $http({
           method: 'POST',
           url: '/api/tasks/' + taskId,
-          data: form
+          data: information
         }).success(function(task){
           return task;
         }).error(function(err){
