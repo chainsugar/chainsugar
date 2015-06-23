@@ -7,7 +7,19 @@ angular.module('trApp')
     // make calls to TaskFormService to retrieve all tasks
 
     TaskService.retrieveUserTasks().success(function(tasks){
-      $scope.tasks = tasks;
+
+      $scope.createdTasks = _.filter(tasks, function(task){
+        return task.isOwner;
+      });
+
+      $scope.appliedTasks = _.filter(tasks, function(task){
+        return (task.appliedTo && !task.isAssignedToMe);
+      });
+
+      $scope.assignedTasks = _.filter(tasks, function(task){
+        return task.isAssignedToMe;
+      });
+
     });
 
     $scope.viewTask = function(id) {
@@ -17,14 +29,3 @@ angular.module('trApp')
   };
 
 })();
-
-// $scope.tasks = [{
-   //   owner: 'Bryan',
-   //   information: {
-   //     cost: '10',
-   //     name: 'Walk The Dog',
-   //     city: 'San Francisco',
-   //     description: 'Easy Money'
-   //   },
-   //   applicants:[]
-   // }];
