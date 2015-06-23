@@ -10,8 +10,7 @@ var TaskSchema = new mongoose.Schema({
   
   // without .populate()
   // [{
-  //   "xyzabc",
-  //   "123456"
+  //   "xyzabc"
   // }]
 
   // with .populate()

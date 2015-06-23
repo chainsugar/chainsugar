@@ -20,8 +20,8 @@ module.exports = function(app, express) {
       // this gives you `name` only
       // must call multiple times per mongoose's doc
       .populate({
-        path: 'owner',
-        select: 'name'
+        path: 'owner',  // model property to replace
+        select: 'name'  // looked up ref model property to return
       })
       .populate({
         path: 'assignedTo',
@@ -31,7 +31,6 @@ module.exports = function(app, express) {
         path: 'applicants',
         select: 'name'
       })
-
       // this will give you everything
       // .populate('owner assignedTo applicants')
       .exec(function(err, tasks){
