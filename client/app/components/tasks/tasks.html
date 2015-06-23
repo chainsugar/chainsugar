@@ -14,7 +14,7 @@
   </thead>
   <tbody>
     <tr class="task" ng-repeat="task in tasks">
-      <td> {{ task.owner }} </td>
+      <td ng-click="viewTask(task._id)"> {{ task.owner }} </td>
       <td> {{ task.information.name }} </td>
       <td> {{ task.information.city }} </td>
       <td> {{ task.information.cost }} </td>
