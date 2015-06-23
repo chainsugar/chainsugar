@@ -79,10 +79,14 @@ module.exports = function(app, express) {
       if(err) {
         res.status(500);
       } else {
-        task.isOwner = task.owner === req.user._id;
-        task.isAssignedToMe = task.assignedTo === req.user._id;
-        task.appliedTo = _.contains(task.applicants, req.user._id);
-        res.status(200).send(task);
+        if(task == null) {
+          res.status(404).end();
+        } else {
+          task.isOwner = task.owner === req.user._id;
+          task.isAssignedToMe = task.assignedTo === req.user._id;
+          task.appliedTo = _.contains(task.applicants, req.user._id);
+          res.status(200).send(task);
+        }
       }
     });
   });
