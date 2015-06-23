@@ -45,6 +45,17 @@
         });
       },
 
+      retrieveTask: function(taskId) {
+        return $http({
+          method: 'GET',
+          url: '/api/tasks/' + taskId
+        }).success(function(tasks){
+          return tasks;
+        }).error(function(err){
+          console.log(err);
+        });
+      },
+
       updateTask: function(taskId) {
       // changing description of a task
       },
