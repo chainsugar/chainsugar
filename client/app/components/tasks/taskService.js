@@ -78,9 +78,24 @@
       },
 
       assignTask: function(taskId, userId) {
+        return $http({
+          method: 'POST',
+          url: '/api/task/assign',
+          data: {
+            task: taskId,
+            user: userId
+          }
+        });
       },
 
       applyForTask: function(taskId) {
+        return $http({
+          method: 'POST',
+          url: '/api/task/apply',
+          data: {
+            task: taskId
+          }
+        });
       },
 
       setTaskComplete: function(taskId) {

@@ -32,6 +32,24 @@ angular.module('trApp')
       TaskService.deleteTask(_id).success(function(){
         $location.path("/tasks");
       });
+      //todo handle error
+    };
+
+    $scope.applyForTask = function(){
+      TaskService.applyForTask(_id).success(function(){
+        $location.path('/tasks');
+      });
+      //todo handle error
+    };
+
+    $scope.assignToUser = function(userId){
+      userId = $scope.task.owner;//just for testing
+
+      TaskService.assignTask(_id, userId).success(function(){
+
+      }).catch(function(err){
+
+      })
     };
 
     reload(_id);
