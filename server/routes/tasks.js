@@ -38,7 +38,6 @@ module.exports = function(app, express) {
         if(err) {
           res.status(500).end();
         } else {
-          console.log(tasks);
           res.status(200).send(tasks);
         }
       });
