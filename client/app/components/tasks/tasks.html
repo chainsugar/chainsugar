@@ -1,26 +1,77 @@
 <div ng-include="'app/shared/navbar/navbar.html'"> </div>
 <!--this page should display all the tasks -->
 <div ng-controller="TasksController">
-  <table class="table table-striped table-hover" ng-show="tasks.length">
-  <thead>
+
+  <div ng-show="createdTasks.length">
+  <span>Tasks created by me</span>
+  <table class="table table-striped table-hover">
+   <thead>
     <tr>
-      <th>Owner</th>
-      <th>Name</th>
-      <th>City</th>
-      <th>Cost</th>
-      <th>Applicants</th>
+      <th>Title</th>
       <th>Due Date</th>
+      <th>Applicants</th>
+      <th>Assigned To</th>
     </tr>
-  </thead>
-  <tbody>
-    <tr class="task" ng-repeat="task in tasks">
-      <td ng-click="viewTask(task._id)"> {{ task.owner }} </td>
-      <td> {{ task.information.name }} </td>
-      <td> {{ task.information.city }} </td>
-      <td> {{ task.information.cost }} </td>
-      <td> {{ task.applicants.length }} </td>
+   </thead>
+   <tbody>
+    <tr class="task" ng-repeat="task in createdTasks | orderBy:'task.deadline'">
+      <td ng-click="viewTask(task._id)"> {{ task.information.name }} </td>
       <td> {{ task.information.deadline }} </td>
+      <td> {{ task.applicants.length }} </td>
+      <td> {{ task.assignedTo }} </td>
     </tr>
    </tbody>
-</table>
+  </table>
+  </div>
+
+  <div ng-show="assignedTasks.length">
+  <span>Tasks assigned to me</span>
+  <table class="table table-striped table-hover">
+   <thead>
+    <tr>
+      <th>Title</th>
+      <th>Due Date</th>
+      <th>Owner</th>
+      <th>City</th>
+      <th>Fees</th>
+    </tr>
+   </thead>
+   <tbody>
+    <tr class="task" ng-repeat="task in assignedTasks | orderBy:'task.deadline'">
+      <td ng-click="viewTask(task._id)"> {{ task.information.name }} </td>
+      <td> {{ task.information.deadline }} </td>
+      <td> {{ task.owner }} </td>
+      <td> {{ task.information.city }} </td>
+      <td> {{ task.information.cost }} </td>
+    </tr>
+   </tbody>
+  </table>
+  </div>
+
+  <div ng-show="appliedTasks.length">
+  <span>Tasks I applied for</span>
+  <table class="table table-striped table-hover">
+   <thead>
+    <tr>
+      <th>Title</th>
+      <th>Due Date</th>
+      <th>Applicants</th>
+      <th>Owner</th>
+      <th>City</th>
+      <th>Fees</th>
+    </tr>
+   </thead>
+   <tbody>
+    <tr class="task" ng-repeat="task in appliedTasks | orderBy:'task.deadline'">
+      <td ng-click="viewTask(task._id)"> {{ task.information.name }} </td>
+      <td> {{ task.information.deadline }} </td>
+      <td> {{ task.applicants.length}} </td>
+      <td> {{ task.owner }} </td>
+      <td> {{ task.information.city }} </td>
+      <td> {{ task.information.cost }} </td>
+    </tr>
+   </tbody>
+  </table>
+  </div>
+
 </div>
