@@ -1,7 +1,7 @@
 <div ng-include="'app/shared/navbar/navbar.html'"> </div>
 <!--this page should display the user's tasks // tasks that have been assigned-->
 <div class="taskContainer">
-  <form class="form-horizontal" ng-submit='updateTask()'>
+  <form class="form-horizontal">
     <fieldset>
       <legend>{{ task.information.name }} from {{ task.owner }}</legend>
       <div class="form-group">
@@ -31,7 +31,10 @@
       <div class="form-group">
         <div class="col-lg-10 col-lg-offset-2">
           <button type="reset" class="btn btn-default" ng-click='deleteTask()'>Delete</button>
-          <button type="submit" class="btn btn-primary">Update</button>
+          <button class="btn btn-primary" ng-click='updateTask()'>Update</button>
+          <button class="btn btn-default" ng-click='applyForTask()'>Apply</button>
+          <button class="btn btn-default" ng-click='assignToUser()'>TEST Assign to Self</button>
+          <button class="btn btn-default" ng-click='taskComplete()'>Set Complete</button>
         </div>
       </div>
     </fieldset>

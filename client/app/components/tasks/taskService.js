@@ -56,12 +56,12 @@
         });
       },
 
-      updateTask: function(taskId) {
+      updateTask: function(taskId, information) {
       // changing description of a task
         return $http({
           method: 'POST',
           url: '/api/tasks/' + taskId,
-          data: form
+          data: information
         }).success(function(task){
           return task;
         }).error(function(err){
@@ -73,24 +73,37 @@
       // remove task from db
         return $http({
           method: 'DELETE',
-          url: '/api/tasks/' + taskId,
-          data: form
-        }).success(function(task){
-          return;
-        }).error(function(err){
-          console.log(err);
+          url: '/api/tasks/' + taskId
         });
       },
 
       assignTask: function(taskId, userId) {
+        return $http({
+          method: 'POST',
+          url: '/api/task/assign',
+          data: {
+            task: taskId,
+            user: userId
+          }
+        });
       },
 
       applyForTask: function(taskId) {
+        return $http({
+          method: 'POST',
+          url: '/api/task/apply',
+          data: {
+            task: taskId
+          }
+        });
       },
 
       setTaskComplete: function(taskId) {
+        return $http({
+          method: 'GET',
+          url: '/api/task/complete/'+taskId
+        });
       }
-
 
     };
   }

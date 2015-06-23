@@ -5,6 +5,7 @@ var TaskSchema = new mongoose.Schema({
   information: Object,  //details of task (data from task creating form)
   applicants: [String], //array of user._id - who applied for task (bunnies)
   assignedTo: String,   //user._id of user selected by owner to perform task
+  complete: Boolean   //set to true by owner when task is complete
 });
 
 module.exports = mongoose.model('Task', TaskSchema);
