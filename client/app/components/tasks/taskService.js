@@ -73,12 +73,7 @@
       // remove task from db
         return $http({
           method: 'DELETE',
-          url: '/api/tasks/' + taskId,
-          data: form
-        }).success(function(task){
-          return;
-        }).error(function(err){
-          console.log(err);
+          url: '/api/tasks/' + taskId
         });
       },
 

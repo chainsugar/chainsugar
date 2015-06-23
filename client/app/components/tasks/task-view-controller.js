@@ -31,9 +31,6 @@ angular.module('trApp')
     $scope.deleteTask = function() {
       TaskService.deleteTask(_id).success(function(){
         $location.path("/tasks");
-      }).catch(function(err){
-        //display error message
-        console.log(err);
       });
     };
 

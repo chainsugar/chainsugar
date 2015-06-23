@@ -14,7 +14,7 @@ module.exports = function(app, express) {
       ]})
       .exec(function(err, tasks){
         if(err) {
-          res.status(500);
+          res.status(500).end();
         } else {
           res.status(200).send(tasks);
         }
@@ -34,7 +34,7 @@ module.exports = function(app, express) {
       .lean()
       .exec(function(err, tasks){
         if(err) {
-          res.status(500);
+          res.status(500).end();
         } else {
           tasks = _.map(tasks, function(task){
             task.isOwner = task.owner === req.user._id;
@@ -57,9 +57,9 @@ module.exports = function(app, express) {
       assignedTo: ""
     }, function(err, task){
       if(err) {
-        res.status(500);
+        res.status(500).end();
       } else {
-        res.send(task).status(201);
+        res.status(201).send(task);
       }
     });
 
@@ -72,7 +72,7 @@ module.exports = function(app, express) {
     //verify task exists and user is owner
     db.Task.findOne({_id:taskId}).exec(function(err, task){
       if(err) {
-        res.status(500);
+        res.status(500).end();
       } else {
         if(task == null) {
           res.status(404).end();
@@ -84,9 +84,9 @@ module.exports = function(app, express) {
             task.information = updatedInformation;
             task.save(function(err){
               if(err){
-                res.status(500);
+                res.status(500).end();
               } else {
-                res.status(200);
+                res.status(200).end();
               }
             });
           }
@@ -102,7 +102,7 @@ module.exports = function(app, express) {
     var taskId = req.params.id;
     db.Task.findOne({_id:taskId}).lean().exec(function(err, task){
       if(err) {
-        res.status(500);
+        res.status(500).end();
       } else {
         if(task == null) {
           res.status(404).end();
@@ -119,7 +119,20 @@ module.exports = function(app, express) {
   //delete a task
   app.delete('/api/tasks/:id', isAuthenticated, function(req, res){
     var taskId = req.params.id;
-    res.end();
+
+    db.Task.remove({$and:[
+      {_id:taskId},
+      {assignedTo: {$eq:""}},
+      {applicants: {$size:0}}
+    ]}, function(err){
+      if(err) {
+        res.status(500).end();
+      } else {
+        console.log('deleted task', taskId);
+        res.status(200).end();
+      }
+    });
+
   });
 }
 
