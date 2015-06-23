@@ -1,10 +1,6 @@
 <div ng-include="'app/shared/navbar/navbar.html'"> </div>
 <!--this page should display the user's tasks // tasks that have been assigned-->
 <div class="taskContainer">
-  <!-- should use tasks list? no, reuse create task form.
-  TODO: customize single view for emphasis.
-  TODO: use ng-click to redirect user from tasks to here -->
-
   <form class="form-horizontal" ng-submit='updateTask()'>
     <fieldset>
       <legend>{{ task.information.name }} from {{ task.owner }}</legend>
@@ -21,7 +17,7 @@
         </div>
         <label for="inputDate" class="col-lg-2 control-label">Deadline</label>
         <div class="col-lg-10">
-          <input type="date" class="form-control" id="inputDate" placeholder="2011-01-13" ng-model="task.information.deadline">
+          <input type="date" class="form-control" id="inputDate" placeholder="2011-01-13" ng-model="deadline">
         </div>
         <label for="inputCity" class="col-lg-2 control-label">City</label>
         <div class="col-lg-10">

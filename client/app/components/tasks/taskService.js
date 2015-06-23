@@ -56,11 +56,25 @@
         });
       },
 
+      retrieveOneTask: function(id) {
+        // returns an array of tasks related to the user
+        // each task will have 'isOwner', 'isAssignedToMe', 'appliedTo'
+        // boolean properties
+        return $http({
+          method: 'GET',
+          url: '/api/tasks/' + id,
+        }).success(function(tasks){
+          return tasks;
+        }).error(function(err){
+          console.log(err);
+        });
+      },
+
       updateTask: function(taskId) {
       // changing description of a task
         return $http({
           method: 'POST',
-          url: '/api/task/' + taskId,
+          url: '/api/tasks/' + taskId,
           data: form
         }).success(function(task){
           return task;
@@ -73,8 +87,8 @@
       // remove task from db
         return $http({
           method: 'DELETE',
-          url: '/api/task/' + taskId,
-          // data: form
+          url: '/api/tasks/' + taskId,
+          data: form
         }).success(function(task){
           return;
         }).error(function(err){
