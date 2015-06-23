@@ -1,5 +1,6 @@
 var db = require("../db/");
 var _ = require("underscore");
+var strToMongooseObjectId = require("mongoose").Types.ObjectId;
 
 module.exports = function(app, express) {
 
@@ -10,6 +11,7 @@ module.exports = function(app, express) {
     // search results on 'description/name'
 
     db.Task.find({$and:[
+        // find ones that are not related to current user
         {owner: {$ne: req.user._id}},
         {assignedTo: {$ne: req.user._id}},
         {applicants: {$ne: req.user._id}}
@@ -42,25 +44,40 @@ module.exports = function(app, express) {
       });
   });
 
-  //return list of all user taks
-  //wher user is owner, assigned to a task or is an applicant
-  //adds additional boolean properties on each task
-  //'isOwner', 'isAssignedToMe', 'appliedTo'
+  // return list of all user tasks
+  // wher user is owner, assigned to a task or is an applicant
+  // adds additional boolean properties on each task
+  // 'isOwner', 'isAssignedToMe', 'appliedTo'
   app.get('/api/mytasks', isAuthenticated, function(req, res){
     db.Task.find({$or:[
-        {owner: req.user._id},
-        {assignedTo: req.user._id},
-        {applicants: req.user._id}
+        // find ones that are not related to current user
+        {owner: {$eq: req.user._id}},
+        {assignedTo: {$eq: req.user._id}},
+        {applicants: {$eq: req.user._id}}
       ]})
-      .lean()
+      .populate({
+        path: 'owner',
+        select: 'name'
+      })
+      .populate({
+        path: 'assignedTo',
+        select: 'name'
+      })
+      .populate({
+        path: 'applicants',
+        select: 'name'
+      })
+      .lean() // allow resulting models to be modifiable
       .exec(function(err, tasks){
         if(err) {
           res.status(500).end();
         } else {
           tasks = _.map(tasks, function(task){
-            task.isOwner = task.owner === req.user._id;
-            task.isAssignedToMe = task.assignedTo === req.user._id;
-            task.appliedTo = _.contains(task.applicants, req.user._id);
+            task.isOwner = task.owner._id === req.user._id;
+            task.isAssignedToMe = task.assignedTo._id === req.user._id;
+            task.appliedTo = _.some(task.applicants, function(user) {
+                return user._id === req.user._id;
+              });
             return task;
           });
           res.status(200).send(tasks);
@@ -72,10 +89,10 @@ module.exports = function(app, express) {
   app.post('/api/tasks', isAuthenticated, function(req, res){
     //TODO: do some input valiation on req.body
     db.Task.create({
-      owner: req.user._id,
+      owner: new strToMongooseObjectId( req.user._id ),
       information: req.body,
       applicants: [],
-      assignedTo: ""
+      assignedTo: null
     }, function(err, task){
       if(err) {
         res.status(500).end();
