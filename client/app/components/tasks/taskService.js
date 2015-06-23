@@ -32,9 +32,17 @@
       },
 
       retrieveUserTasks: function(searchQuery) {
-      // returns an array of tasks specific to the user
-      // will have property (bool) to tell if the owner
-      // owns the task
+        // returns an array of tasks related to the user
+        // each task will have 'isOwner', 'isAssignedToMe', 'appliedTo'
+        // boolean properties
+        return $http({
+          method: 'GET',
+          url: '/api/mytasks',
+        }).success(function(tasks){
+          return tasks;
+        }).error(function(err){
+          console.log(err);
+        });
       },
 
       updateTask: function(taskId) {
