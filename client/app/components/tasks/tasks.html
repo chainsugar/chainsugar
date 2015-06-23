@@ -40,7 +40,7 @@
     <tr class="task" ng-repeat="task in assignedTasks | orderBy:'task.deadline'">
       <td ng-click="viewTask(task._id)"> {{ task.information.name }} </td>
       <td> {{ task.information.deadline }} </td>
-      <td> {{ task.owner }} </td>
+      <td> {{ task.owner.name }} </td>
       <td> {{ task.information.city }} </td>
       <td> {{ task.information.cost }} </td>
     </tr>
@@ -66,7 +66,7 @@
       <td ng-click="viewTask(task._id)"> {{ task.information.name }} </td>
       <td> {{ task.information.deadline }} </td>
       <td> {{ task.applicants.length}} </td>
-      <td> {{ task.owner }} </td>
+      <td> {{ task.owner.name }} </td>
       <td> {{ task.information.city }} </td>
       <td> {{ task.information.cost }} </td>
     </tr>
