@@ -1,12 +1,18 @@
 (function(){
 
 angular.module('trApp')
-    .controller('TasksController', ['$scope', 'TaskService', TasksController]);
+    .controller('TasksController', ['$scope', '$location', 'TaskService', TasksController]);
 
-  function TasksController($scope, TaskService){
+  function TasksController($scope, $location, TaskService){
+    // make calls to TaskFormService to retrieve all tasks
+
     TaskService.retrieveUserTasks().success(function(tasks){
       $scope.tasks = tasks;
     });
+
+    $scope.viewTask = function(id) {
+      $location.path('/task/' + id);
+    }
 
   };
 
