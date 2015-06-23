@@ -13,7 +13,7 @@ angular.module('trApp')
       TaskService.retrieveTask(_id).success(function(task){
         $scope.task = task;
         // date is a pesky thing to deal with
-        // must be always be a Date object for the model per angular's doc
+        // must always be a Date object for the model per angular's doc
         $scope.deadline = new Date( $scope.task.information.deadline );
       });
     };
@@ -49,7 +49,7 @@ angular.module('trApp')
 
       }).catch(function(err){
 
-      })
+      });
     };
 
     $scope.taskComplete = function(){
@@ -60,4 +60,3 @@ angular.module('trApp')
   };
 
 })();
-

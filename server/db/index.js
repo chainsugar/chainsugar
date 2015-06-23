@@ -6,4 +6,4 @@ mongoose.connect(config.MONGODB_URL);
 module.exports = {
   User: require('./user.js'),
   Task: require('./task.js')
-}
+};
