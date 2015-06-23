@@ -52,6 +52,10 @@ angular.module('trApp')
       })
     };
 
+    $scope.taskComplete = function(){
+      TaskService.setTaskComplete(_id);
+    };
+
     reload(_id);
   };
 

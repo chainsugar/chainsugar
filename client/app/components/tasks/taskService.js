@@ -99,8 +99,11 @@
       },
 
       setTaskComplete: function(taskId) {
+        return $http({
+          method: 'GET',
+          url: '/api/task/complete/'+taskId
+        });
       }
-
 
     };
   }

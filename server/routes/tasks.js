@@ -182,6 +182,28 @@ module.exports = function(app, express) {
       }
     });
   });
+
+  app.get('/api/task/complete/:id', isAuthenticated, function(req, res){
+    var taskId = req.params.id;
+
+    db.Task.findOne({$and:[
+      {_id:taskId},
+      {owner: req.user._id}
+    ]}, function(err, task){
+      if(err){
+        return res.status(500).end();
+      }
+      if(task){
+        task.complete = true;
+        task.save(function(){
+          res.status(200).end();
+        });
+      } else {
+        res.status(403).end();
+      }
+    })
+
+  });
 }
 
 function isAuthenticated(req, res, next){
