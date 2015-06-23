@@ -72,25 +72,25 @@ module.exports = function(app, express) {
     //verify task exists and user is owner
     db.Task.findOne({_id:taskId}).exec(function(err, task){
       if(err) {
-        res.status(500).end();
+        return res.status(500).end();
+      }
+
+      if(task == null) {
+        return res.status(404).end();
+      }
+
+      // owner can only update/edit task before anyone applies or is assigned
+      if (task.owner !== req.user._id || task.assignedTo || task.applicants.length) {
+        res.status(403).end();
       } else {
-        if(task == null) {
-          res.status(404).end();
-        } else {
-          // owner can only update/edit task before anyone applies or is assigned
-          if (task.owner !== req.user._id || task.assignedTo || task.applicants.length) {
-            res.status(401).end();
+        task.information = updatedInformation;
+        task.save(function(err){
+          if(err){
+            res.status(500).end();
           } else {
-            task.information = updatedInformation;
-            task.save(function(err){
-              if(err){
-                res.status(500).end();
-              } else {
-                res.status(200).end();
-              }
-            });
+            res.status(200).end();
           }
-        }
+        });
       }
     });
 
@@ -130,7 +130,7 @@ module.exports = function(app, express) {
       if(task) {
         res.status(200).end();
       } else {
-        res.status(404).end();
+        res.status(403).end();
       }
     });
 
@@ -147,13 +147,16 @@ module.exports = function(app, express) {
       {assignedTo: {$eq:""}},
       {applicants: userId}
     ]},function(err, task){
+      if(err) {
+        return res.status(500).end();
+      }
       if(task){
         task.assignedTo = userId;
         task.save(function(){
           res.status(201).end();
         });
       } else {
-        res.status(404).end();
+        res.status(403).end();
       }
     });
   });
@@ -165,13 +168,17 @@ module.exports = function(app, express) {
       {_id:taskId},
       {assignedTo: {$eq:""}}
     ]},function(err, task){
+      if(err) {
+        return res.status(500).end();
+      }
+
       if(task && !_.contains(task.applicants, req.user._id)){
         task.applicants.push(req.user._id);
         task.save(function(){
           res.status(201).end();
         });
       } else {
-        res.status(404).end();
+        res.status(403).end();
       }
     });
   });
