@@ -5,13 +5,35 @@ module.exports = function(app, express) {
 
   //return list of all tasks - exclude my tasks
   app.get('/api/tasks', isAuthenticated, function(req, res){
-    //TODO: take a search query in request params to return
-    //search results on 'description/name'
+
+    // TODO: take a search query in request params to return
+    // search results on 'description/name'
+
     db.Task.find({$and:[
         {owner: {$ne: req.user._id}},
         {assignedTo: {$ne: req.user._id}},
         {applicants: {$ne: req.user._id}}
       ]})
+      // there are no joins in mongoose, c'mon..
+      // make do with .popluate() instead
+      
+      // this gives you `name` only
+      // must call multiple times per mongoose's doc
+      .populate({
+        path: 'owner',
+        select: 'name'
+      })
+      .populate({
+        path: 'assignedTo',
+        select: 'name'
+      })
+      .populate({
+        path: 'applicants',
+        select: 'name'
+      })
+
+      // this will give you everything
+      // .populate('owner assignedTo applicants')
       .exec(function(err, tasks){
         if(err) {
           res.status(500).end();
