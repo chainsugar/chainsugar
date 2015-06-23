@@ -58,10 +58,28 @@
 
       updateTask: function(taskId) {
       // changing description of a task
+        return $http({
+          method: 'POST',
+          url: '/api/task/' + taskId,
+          data: form
+        }).success(function(task){
+          return task;
+        }).error(function(err){
+          console.log(err);
+        });
       },
 
       deleteTask: function(taskId) {
       // remove task from db
+        return $http({
+          method: 'DELETE',
+          url: '/api/task/' + taskId,
+          // data: form
+        }).success(function(task){
+          return;
+        }).error(function(err){
+          console.log(err);
+        });
       },
 
       assignTask: function(taskId, userId) {

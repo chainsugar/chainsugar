@@ -1,3 +1,43 @@
 <div ng-include="'app/shared/navbar/navbar.html'"> </div>
 <!--this page should display the user's tasks // tasks that have been assigned-->
-<div class="taskContainer"> </div>
+<div class="taskContainer">
+  <!-- should use tasks list? no, reuse create task form.
+  TODO: customize single view for emphasis.
+  TODO: use ng-click to redirect user from tasks to here -->
+
+  <form class="form-horizontal" ng-submit='updateTask()'>
+    <fieldset>
+      <legend>{{ task.information.name }} from {{ task.owner }}</legend>
+      <div class="form-group">
+        <label for="inputName" class="col-lg-2 control-label">Name of Task</label>
+        <div class="col-lg-10">
+          <input type="text" class="form-control" id="inputName" placeholder="wash dishes" ng-model="task.information.name">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputCost" class="col-lg-2 control-label">Cost</label>
+        <div class="col-lg-10">
+          <input type="number" class="form-control" id="inputCost" placeholder="$10" ng-model="task.information.cost">
+        </div>
+        <label for="inputDate" class="col-lg-2 control-label">Deadline</label>
+        <div class="col-lg-10">
+          <input type="date" class="form-control" id="inputDate" placeholder="2011-01-13" ng-model="task.information.deadline">
+        </div>
+        <label for="inputCity" class="col-lg-2 control-label">City</label>
+        <div class="col-lg-10">
+          <input type="text" class="form-control" id="inputCity" placeholder="San Francisco" ng-model="task.information.city">
+        </div>
+        <label for="textArea" class="col-lg-2 control-label">Description</label>
+        <div class="col-lg-10">
+          <textarea class="form-control" rows="3" id="textArea" ng-model="task.information.description"></textarea>
+          <span class="help-block">A longer block of help text that breaks onto a new line and may extend beyond one line.</span>
+        </div>
+      <div class="form-group">
+        <div class="col-lg-10 col-lg-offset-2">
+          <button type="reset" class="btn btn-default" ng-click='deleteTask()'>Delete</button>
+          <button type="submit" class="btn btn-primary">Update</button>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+</div>
