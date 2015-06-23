@@ -102,37 +102,78 @@ module.exports = function(app, express) {
     var taskId = req.params.id;
     db.Task.findOne({_id:taskId}).lean().exec(function(err, task){
       if(err) {
-        res.status(500).end();
+        return res.status(500).end();
+      }
+      if(task) {
+        task.isOwner = task.owner === req.user._id;
+        task.isAssignedToMe = task.assignedTo === req.user._id;
+        task.appliedTo = _.contains(task.applicants, req.user._id);
+        res.status(200).send(task);
       } else {
-        if(task == null) {
-          res.status(404).end();
-        } else {
-          task.isOwner = task.owner === req.user._id;
-          task.isAssignedToMe = task.assignedTo === req.user._id;
-          task.appliedTo = _.contains(task.applicants, req.user._id);
-          res.status(200).send(task);
-        }
+        res.status(404).end();
       }
     });
   });
 
-  //delete a task
+  //delete a task which has not been assigned
   app.delete('/api/tasks/:id', isAuthenticated, function(req, res){
     var taskId = req.params.id;
 
     db.Task.remove({$and:[
       {_id:taskId},
-      {assignedTo: {$eq:""}},
-      {applicants: {$size:0}}
-    ]}, function(err){
+      {owner: {$eq:req.user._id}},
+      {assignedTo: {$eq:""}}
+    ]}, function(err, task){
       if(err) {
-        res.status(500).end();
-      } else {
-        console.log('deleted task', taskId);
+        return res.status(500).end();
+      }
+      if(task) {
         res.status(200).end();
+      } else {
+        res.status(404).end();
       }
     });
 
+  });
+
+  app.post('/api/task/assign', isAuthenticated, function(req, res){
+    var taskId = req.body.task;
+    var userId = req.body.user;
+    //check task is valid, owned by user,
+    //not yet assigned and and userId is an applicants
+    db.Task.findOne({$and:[
+      {_id:taskId},
+      {owner: {$eq:req.user._id}},
+      {assignedTo: {$eq:""}},
+      {applicants: userId}
+    ]},function(err, task){
+      if(task){
+        task.assignedTo = userId;
+        task.save(function(){
+          res.status(201).end();
+        });
+      } else {
+        res.status(404).end();
+      }
+    });
+  });
+
+  app.post('/api/task/apply', isAuthenticated, function(req, res){
+    var taskId = req.body.task;
+    //Todo - prevent owner from applying and user applying more than once
+    db.Task.findOne({$and:[
+      {_id:taskId},
+      {assignedTo: {$eq:""}}
+    ]},function(err, task){
+      if(task && !_.contains(task.applicants, req.user._id)){
+        task.applicants.push(req.user._id);
+        task.save(function(){
+          res.status(201).end();
+        });
+      } else {
+        res.status(404).end();
+      }
+    });
   });
 }
 
