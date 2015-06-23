@@ -56,20 +56,6 @@
         });
       },
 
-      retrieveOneTask: function(id) {
-        // returns an array of tasks related to the user
-        // each task will have 'isOwner', 'isAssignedToMe', 'appliedTo'
-        // boolean properties
-        return $http({
-          method: 'GET',
-          url: '/api/tasks/' + id,
-        }).success(function(tasks){
-          return tasks;
-        }).error(function(err){
-          console.log(err);
-        });
-      },
-
       updateTask: function(taskId) {
       // changing description of a task
         return $http({
