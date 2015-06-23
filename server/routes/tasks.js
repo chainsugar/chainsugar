@@ -96,7 +96,6 @@ module.exports = function(app, express) {
 
   });
 
-
   //get one specific task
   app.get('/api/tasks/:id', isAuthenticated, function(req, res){
     var taskId = req.params.id;
@@ -145,7 +144,7 @@ module.exports = function(app, express) {
       {_id:taskId},
       {owner: {$eq:req.user._id}},
       {assignedTo: {$eq:""}},
-      {applicants: userId}
+      {applicants: userId} // userId is checked against an array of strings by mongoose
     ]},function(err, task){
       if(err) {
         return res.status(500).end();
@@ -201,7 +200,7 @@ module.exports = function(app, express) {
       } else {
         res.status(403).end();
       }
-    })
+    });
 
   });
 }
