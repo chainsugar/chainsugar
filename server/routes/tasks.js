@@ -108,28 +108,41 @@ module.exports = function(app, express) {
     var taskId = req.params.id;
     var updatedInformation = req.body;
     //verify task exists and user is owner
-    db.Task.findOne({_id:taskId}).exec(function(err, task){
-      if(err) {
-        return res.status(500).end();
-      }
+    db.Task.findById(taskId)
+      .populate({
+        path: 'owner',
+        select: 'name'
+      })
+      .populate({
+        path: 'assignedTo',
+        select: 'name'
+      })
+      .populate({
+        path: 'applicants',
+        select: 'name'
+      })
+      .exec(function(err, task){
+        if(err) {
+          return res.status(500).end();
+        }
 
-      if(task == null) {
-        return res.status(404).end();
-      }
+        if(task == null) {
+          return res.status(404).end();
+        }
 
-      // owner can only update/edit task before anyone applies or is assigned
-      if (task.owner !== req.user._id || task.assignedTo || task.applicants.length) {
-        res.status(403).end();
-      } else {
-        task.information = updatedInformation;
-        task.save(function(err){
-          if(err){
-            res.status(500).end();
-          } else {
-            res.status(200).end();
-          }
-        });
-      }
+        // owner can only update/edit task before anyone applies or is assigned
+        if (task.owner._id !== req.user._id || task.assignedTo || task.applicants.length) {
+          res.status(403).end();
+        } else {
+          task.information = updatedInformation;
+          task.save(function(err){
+            if(err){
+              res.status(500).end();
+            } else {
+              res.status(200).end();
+            }
+          });
+        }
     });
 
   });
@@ -137,19 +150,35 @@ module.exports = function(app, express) {
   //get one specific task
   app.get('/api/tasks/:id', isAuthenticated, function(req, res){
     var taskId = req.params.id;
-    db.Task.findOne({_id:taskId}).lean().exec(function(err, task){
-      if(err) {
-        return res.status(500).end();
-      }
-      if(task) {
-        task.isOwner = task.owner === req.user._id;
-        task.isAssignedToMe = task.assignedTo === req.user._id;
-        task.appliedTo = _.contains(task.applicants, req.user._id);
-        res.status(200).send(task);
-      } else {
-        res.status(404).end();
-      }
-    });
+    db.Task.findById(taskId)
+      .populate({
+        path: 'owner',
+        select: 'name'
+      })
+      .populate({
+        path: 'assignedTo',
+        select: 'name'
+      })
+      .populate({
+        path: 'applicants',
+        select: 'name'
+      })
+      .lean()
+      .exec(function(err, task){
+        if(err) {
+          return res.status(500).end();
+        }
+        if(task) {
+          task.isOwner = task.owner._id === req.user._id;
+          task.isAssignedToMe = task.assignedTo._id === req.user._id;
+          task.appliedTo = _.some(task.applicants, function(user) {
+              return user._id === req.user._id;
+            });
+          res.status(200).send(task);
+        } else {
+          res.status(404).end();
+        }
+      });
   });
 
   //delete a task which has not been assigned
@@ -157,9 +186,9 @@ module.exports = function(app, express) {
     var taskId = req.params.id;
 
     db.Task.remove({$and:[
-      {_id:taskId},
-      {owner: {$eq:req.user._id}},
-      {assignedTo: {$eq:""}}
+      {_id: {$eq: taskId}},
+      {owner: {$eq: req.user._id}},
+      {assignedTo: {$eq: ""}}
     ]}, function(err, task){
       if(err) {
         return res.status(500).end();
