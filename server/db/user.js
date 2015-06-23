@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 var UserSchema = new mongoose.Schema({
-  googleId: {type: String, index: { unique: true } },
+  googleId: { type: String, index: { unique: true } },
   name: String
 });
 

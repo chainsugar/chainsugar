@@ -1,11 +1,29 @@
 var mongoose = require('mongoose');
 
 var TaskSchema = new mongoose.Schema({
-  owner: String,   //user._id of creator of task
-  information: Object,  //details of task (data from task creating form)
-  applicants: [String], //array of user._id - who applied for task (bunnies)
-  assignedTo: String,   //user._id of user selected by owner to perform task
-  complete: Boolean   //set to true by owner when task is complete
+  owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  // user._id of creator of task
+  information: Object,  
+  // details of task (data from task creating form)
+  applicants: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }], 
+  // array of individuals (user._id, as a string) applied for task (see below)
+  
+  // without .populate()
+  // [{
+  //   "xyzabc",
+  //   "123456"
+  // }]
+
+  // with .populate()
+  // [{
+  //   _id: user._id,
+  //   name: user.name
+  // }]
+
+  assignedTo: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  // user._id of user selected by owner to perform task
+  complete: Boolean     
+  // set to true by owner when task is complete
 });
 
 module.exports = mongoose.model('Task', TaskSchema);
