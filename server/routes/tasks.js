@@ -234,6 +234,10 @@ module.exports = function(app, express) {
       .where({
         assignedTo: {$eq: null}
       })
+      .populate({
+        path: 'applicants',
+        select: 'name'
+      })
       .exec(function(err, task){
         if(err) {
           return res.status(500).end();
