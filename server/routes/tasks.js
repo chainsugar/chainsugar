@@ -231,23 +231,28 @@ module.exports = function(app, express) {
   app.post('/api/task/apply', isAuthenticated, function(req, res){
     var taskId = req.body.task;
     //Todo - prevent owner from applying and user applying more than once
-    db.Task.findOne({$and:[
-      {_id:taskId},
-      {assignedTo: {$eq:""}}
-    ]},function(err, task){
-      if(err) {
-        return res.status(500).end();
-      }
+    db.Task.findById(taskId)
+      .where({
+        assignedTo: {$eq: null}
+      })
+      .exec(function(err, task){
+        if(err) {
+          return res.status(500).end();
+        }
 
-      if(task && !_.contains(task.applicants, req.user._id)){
-        task.applicants.push(req.user._id);
-        task.save(function(){
-          res.status(201).end();
-        });
-      } else {
-        res.status(403).end();
-      }
-    });
+        var isApplicant = _.some(task.applicants, function(user) {
+            return user._id === req.user._id;
+          });
+
+        if(task && !isApplicant){
+          task.applicants.push(new strToMongooseObjectId( req.user._id ));
+          task.save(function(){
+            res.status(201).end();
+          });
+        } else {
+          res.status(403).end();
+        }
+      });
   });
 
   app.get('/api/task/complete/:id', isAuthenticated, function(req, res){
