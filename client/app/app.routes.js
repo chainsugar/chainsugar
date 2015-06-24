@@ -15,19 +15,19 @@
             publicAccess: true
         })
         .when('/create-task', {
-            templateUrl: 'app/components/tasks/task-form.html',
+            templateUrl: 'app/components/taskNew/task-form.html',
             controller: 'TaskFormController'
         })
         .when('/tasks', {
-            templateUrl: 'app/components/tasks/tasks.html',
-            controller: 'TaskFormController'
+            templateUrl: 'app/components/myTasks/tasks.html',
+            controller: 'TasksController'
         })
         .when('/task/:id', {
-            templateUrl: 'app/components/tasks/task-view.html',
+            templateUrl: 'app/components/taskDetails/task-view.html',
             controller: 'TaskViewController'
         })
         .when('/search', {
-            templateUrl: 'app/components/tasks/taskSearch.html',
+            templateUrl: 'app/components/taskSearch/taskSearch.html',
             controller: 'TaskSearchController'
         })
         .otherwise({redirectTo: '/'});
