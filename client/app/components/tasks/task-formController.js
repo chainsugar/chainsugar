@@ -2,9 +2,9 @@
 
   //load module
   angular.module('trApp')
-    .controller('TaskFormController', ['$scope', '$http', '$location', 'TaskService', TaskFormController]);
+    .controller('TaskFormController', ['$scope', '$location', 'TaskService', TaskFormController]);
 
-  function TaskFormController($scope, $http, $location, TaskService){
+  function TaskFormController($scope, $location, TaskService){
     $scope.form = {};
 
     // http POST on form submit

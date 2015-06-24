@@ -26,6 +26,10 @@
             templateUrl: 'app/components/tasks/task-view.html',
             controller: 'TaskViewController'
         })
+        .when('/search', {
+            templateUrl: 'app/components/tasks/taskSearch.html',
+            controller: 'TaskSearchController'
+        })
         .otherwise({redirectTo: '/'});
 
     });

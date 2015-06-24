@@ -7,6 +7,10 @@ angular.module('trApp')
     // make calls to TaskFormService to retrieve all tasks
 
     TaskService.retrieveUserTasks().success(function(tasks){
+      tasks = _.map(tasks, function(task){
+        task.information.deadline = moment(Date(task.information.deadline)).format('MMMM Do YYYY');
+        return task;
+      });
 
       $scope.createdTasks = _.filter(tasks, function(task){
         return task.isOwner;

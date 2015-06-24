@@ -13,12 +13,12 @@ module.exports = function(app, express) {
     db.Task.find({$and:[
         // find ones that are not related to current user
         {owner: {$ne: req.user._id}},
-        {assignedTo: {$ne: req.user._id}},
+        {assignedTo: {$eq: null}},
         {applicants: {$ne: req.user._id}}
       ]})
       // there are no joins in mongoose, c'mon..
       // make do with .popluate() instead
-      
+
       // this gives you `name` only
       // must call multiple times per mongoose's doc
       .populate({
@@ -50,7 +50,6 @@ module.exports = function(app, express) {
   // 'isOwner', 'isAssignedToMe', 'appliedTo'
   app.get('/api/mytasks', isAuthenticated, function(req, res){
     db.Task.find({$or:[
-        // find ones that are not related to current user
         {owner: {$eq: req.user._id}},
         {assignedTo: {$eq: req.user._id}},
         {applicants: {$eq: req.user._id}}
@@ -73,10 +72,10 @@ module.exports = function(app, express) {
           res.status(500).end();
         } else {
           tasks = _.map(tasks, function(task){
-            task.isOwner = task.owner._id === req.user._id;
-            task.isAssignedToMe = task.assignedTo._id === req.user._id;
+            task.isOwner = task.owner._id.equals(req.user._id);
+            task.isAssignedToMe = task.assignedTo ? task.assignedTo._id.equals(req.user._id) : false;
             task.appliedTo = _.some(task.applicants, function(user) {
-                return user._id === req.user._id;
+                return user._id.equals(req.user._id);
               });
             return task;
           });
@@ -89,7 +88,7 @@ module.exports = function(app, express) {
   app.post('/api/tasks', isAuthenticated, function(req, res){
     //TODO: do some input valiation on req.body
     db.Task.create({
-      owner: new strToMongooseObjectId( req.user._id ),
+      owner: new strToMongooseObjectId(req.user._id),
       information: req.body,
       applicants: [],
       assignedTo: null
@@ -131,7 +130,7 @@ module.exports = function(app, express) {
         }
 
         // owner can only update/edit task before anyone applies or is assigned
-        if (task.owner._id !== req.user._id || task.assignedTo || task.applicants.length) {
+        if (!task.owner._id.equals(req.user._id) || task.assignedTo || task.applicants.length) {
           res.status(403).end();
         } else {
           task.information = updatedInformation;
@@ -169,10 +168,10 @@ module.exports = function(app, express) {
           return res.status(500).end();
         }
         if(task) {
-          task.isOwner = task.owner._id === req.user._id;
-          task.isAssignedToMe = task.assignedTo._id === req.user._id;
+          task.isOwner = task.owner._id.equals(req.user._id);
+          task.isAssignedToMe = task.assignedTo ? task.assignedTo._id.equals(req.user._id) : false;
           task.appliedTo = _.some(task.applicants, function(user) {
-              return user._id === req.user._id;
+              return user._id.equals(req.user._id);
             });
           res.status(200).send(task);
         } else {
@@ -188,7 +187,7 @@ module.exports = function(app, express) {
     db.Task.remove({$and:[
       {_id: {$eq: taskId}},
       {owner: {$eq: req.user._id}},
-      {assignedTo: {$eq: ""}}
+      {assignedTo: {$eq: null}}
     ]}, function(err, task){
       if(err) {
         return res.status(500).end();
@@ -218,7 +217,7 @@ module.exports = function(app, express) {
           return res.status(500).end();
         }
         if(task){
-          task.assignedTo = new strToMongooseObjectId( userId );
+          task.assignedTo = new strToMongooseObjectId(userId);
           task.save(function(){
             res.status(201).end();
           });
@@ -235,21 +234,28 @@ module.exports = function(app, express) {
       .where({
         assignedTo: {$eq: null}
       })
+      .populate({
+        path: 'applicants',
+        select: 'name'
+      })
       .exec(function(err, task){
         if(err) {
           return res.status(500).end();
         }
+        if (task) {
+          var isApplicant = _.some(task.applicants, function(user) {
+              return user._id.equals(req.user._id);
+            });
 
-        var isApplicant = _.some(task.applicants, function(user) {
-            return user._id === req.user._id;
-          });
-
-        if(task && !isApplicant){
-          gtask.applicants.push(new strToMongooseObjectId( req.user._id ));
-          task.save(function(){
-            res.status(201).end();
-          });
-        } else {
+          if(!isApplicant){
+            task.applicants.push(new strToMongooseObjectId(req.user._id));
+            task.save(function(){
+              res.status(201).end();
+            });
+          } else{
+            res.status(403).end();
+          }
+        }else{
           res.status(403).end();
         }
       });
