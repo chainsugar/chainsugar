@@ -28,7 +28,7 @@ table tr {
 }
 
 /* ==========================================================================
-New Task Form
+Form
 ========================================================================== */
 
 .form-header {
@@ -36,26 +36,20 @@ New Task Form
   text-align: center;
 }
 
+/* new task form */
 #inputName, #inputCity {
   width: 200px;
 }
-
 #inputCost, #inputDate, #textArea, #inputCity {
   margin-bottom: 20px;
 }
-
 #inputCost {
   width: 100px;
 }
-
 #inputDate {
   width: 200px;
 }
-
 #textArea {
   width: 500px;
   height: 200px;
 }
-
-
-
