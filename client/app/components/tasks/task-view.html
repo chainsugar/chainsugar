@@ -7,24 +7,24 @@
      <li>Owner: {{ task.owner.name }}</li>
      <li>Task: {{ task.information.name }}</li>
      <li>City: {{ task.information.city }}</li>
-     <li>Due: {{ moment(deadline).format('MMMM Do YYYY, h:mm:ss a') }}</li>
-     <li>Description: {{ task.iformation.description }}</li>
+     <li>Due: {{ deadlineStr }}</li>
+     <li>Description: {{ task.information.description }}</li>
      <li>Fees: {{ task.information.cost }}</li>
     </ul>
 
-    <button ng-show="task.isOwner" ng-click="editTask()">Edit</button>
-    <button ng-show="!task.isOwner" ng-click="applyForTask()" class="btn btn-default">Apply</button>
+    <button ng-show="task.isOwner && !task.assignedTo && task.applicants.length==0" ng-click="editTask()" class="btn btn-default">Edit</button>
+    <button ng-show="!task.isOwner && !task.assignedTo" ng-click="applyForTask()" class="btn btn-default">Apply</button>
 
     <div ng-show="task.assignedTo">
       <!-- assigned person -->
-      Task is assigned to: {{ task.assignedTo.name }}
-      <button ng-show="task.isOwner" ng-click="taskComplete()" class="btn btn-default">Set Complete</button>
+      <div>Task is assigned to: {{ task.assignedTo.name }}</div>
+      <button ng-show="task.isOwner && !task.complete" ng-click="taskComplete()" class="btn btn-default">Set Complete</button>
     </div>
     <div ng-show="!task.assignedTo">
       <!-- list of applicants -->
       <ul>
         <li ng-repeat="user in task.applicants">
-          {{ user.name }} - <button ng-click='assignToUser(user._id)'>Assign</button>
+          {{ user.name }} - <button ng-click='assignToUser(user._id)' class="btn btn-default">Assign</button>
         </li>
       </ul>
     </div>
@@ -55,12 +55,13 @@
         <label for="textArea" class="col-lg-2 control-label">Description</label>
         <div class="col-lg-10">
           <textarea class="form-control" rows="3" id="textArea" ng-model="task.information.description"></textarea>
-          <span class="help-block">A longer block of help text that breaks onto a new line and may extend beyond one line.</span>
+          <span class="help-block"></span>
         </div>
         <div class="form-group">
           <div class="col-lg-10 col-lg-offset-2">
-            <button type="reset" class="btn btn-default" ng-click='deleteTask()'>Delete</button>
             <button class="btn btn-primary" ng-click='updateTask()'>Update</button>
+            <button class="btn btn-danger" ng-click='deleteTask()'>Delete</button>
+            <button class="btn btn-default" ng-click="cancelEditTask()">Cancel</button>
           </div>
         </div>
       </div>

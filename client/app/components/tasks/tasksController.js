@@ -8,7 +8,8 @@ angular.module('trApp')
 
     TaskService.retrieveUserTasks().success(function(tasks){
       tasks = _.map(tasks, function(task){
-        task.information.deadline = moment(Date(task.information.deadline)).format('MMMM Do YYYY, h:mm:ss a');
+        task.information.deadline = moment(Date(task.information.deadline)).format('MMMM Do YYYY');
+        return task;
       });
 
       $scope.createdTasks = _.filter(tasks, function(task){
