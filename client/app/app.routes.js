@@ -11,7 +11,7 @@
         })
         .when('/sign-in', {
             templateUrl: 'app/components/sign-in/sign-in.html',
-            controller: 'LoginPageController',
+            controller: 'SignInPageController',
             publicAccess: true
         })
         .when('/create-task', {
