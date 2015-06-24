@@ -207,24 +207,25 @@ module.exports = function(app, express) {
     var userId = req.body.user;
     //check task is valid, owned by user,
     //not yet assigned and and userId is an applicants
-    db.Task.findOne({$and:[
-      {_id:taskId},
-      {owner: {$eq:req.user._id}},
-      {assignedTo: {$eq:""}},
-      {applicants: userId} // userId is checked against an array of strings by mongoose
-    ]},function(err, task){
-      if(err) {
-        return res.status(500).end();
-      }
-      if(task){
-        task.assignedTo = userId;
-        task.save(function(){
-          res.status(201).end();
-        });
-      } else {
-        res.status(403).end();
-      }
-    });
+    db.Task.findById(taskId)
+      .where({$and:[
+        {owner: {$eq:req.user._id}},
+        {assignedTo: {$eq: null}},
+        {applicants: {$eq: userId}} // userId is checked against an array of strings by mongoose
+      ]})
+      .exec(function(err, task){
+        if(err) {
+          return res.status(500).end();
+        }
+        if(task){
+          task.assignedTo = new strToMongooseObjectId( userId );
+          task.save(function(){
+            res.status(201).end();
+          });
+        } else {
+          res.status(403).end();
+        }
+      });
   });
 
   app.post('/api/task/apply', isAuthenticated, function(req, res){
