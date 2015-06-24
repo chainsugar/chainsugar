@@ -1,13 +1,12 @@
-// login page controller here
-
 (function(){
 
 //load module
 angular.module('trApp')
-  .controller('LoginPageController', ['$scope', '$location', LoginPageController]);
-  
-function LoginPageController(){
+  .controller('SignInPageController', ['$scope', '$location', SignInPageController]);
+
+  function SignInPageController() {
+
   }
 
 })();
-  // insert auth service here as a dependency
+
