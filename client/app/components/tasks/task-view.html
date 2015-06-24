@@ -3,7 +3,7 @@
 <div class="taskContainer">
 
   <div ng-show="!editMode">
-    <div>Task details</div>
+    <div>Task details - status: {{ task.complete ? "Completed" : "Pending"}} </div>
     <ul>
      <li>Owner: {{ task.owner.name }}</li>
      <li>Task: {{ task.information.name }}</li>

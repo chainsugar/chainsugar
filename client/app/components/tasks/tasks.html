@@ -11,6 +11,7 @@
       <th>Due Date</th>
       <th>Applicants</th>
       <th>Assigned To</th>
+      <th>Status</th>
     </tr>
    </thead>
    <tbody>
@@ -19,6 +20,7 @@
       <td> {{ task.information.deadline }} </td>
       <td> {{ task.applicants.length }} </td>
       <td> {{ task.assignedTo.name }} </td>
+      <td> {{ task.complete ? "Completed" : "Pending"}} </td>
     </tr>
    </tbody>
   </table>
@@ -34,6 +36,7 @@
       <th>Owner</th>
       <th>City</th>
       <th>Fees</th>
+      <th>Status</th>
     </tr>
    </thead>
    <tbody>
@@ -43,6 +46,7 @@
       <td> {{ task.owner.name }} </td>
       <td> {{ task.information.city }} </td>
       <td> {{ task.information.cost }} </td>
+      <td> {{ task.complete ? "Completed" : "Pending"}} </td>
     </tr>
    </tbody>
   </table>
@@ -56,9 +60,11 @@
       <th>Title</th>
       <th>Due Date</th>
       <th>Applicants</th>
+      <th>Assigned To</th>
       <th>Owner</th>
       <th>City</th>
       <th>Fees</th>
+      <th>Status</th>
     </tr>
    </thead>
    <tbody>
@@ -66,9 +72,11 @@
       <td ng-click="viewTask(task._id)"> {{ task.information.name }} </td>
       <td> {{ task.information.deadline }} </td>
       <td> {{ task.applicants.length}} </td>
+      <td> {{ task.assignedTo.name }} </td>
       <td> {{ task.owner.name }} </td>
       <td> {{ task.information.city }} </td>
       <td> {{ task.information.cost }} </td>
+      <td> {{ task.complete ? "Completed" : "Pending"}} </td>
     </tr>
    </tbody>
   </table>
