@@ -7,11 +7,19 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>Task Bunny</title>
 
-    <!-- Bootstrap -->
+    <script src="assets/js/min/modernizr.custom.min.js"></script>
+    
+    <!-- third party css files -->
     <link href="//bootswatch.com/superhero/bootstrap.min.css" rel="stylesheet">
-
-     <!-- OUR css -->
-    <link href="assets/styles.css" rel="stylesheet">
+    <link href="assets/css/jquery.fancybox.css" rel="stylesheet">
+    <link href="assets/css/flickity.css" rel="stylesheet" >
+    <link href="assets/css/animate.css" rel="stylesheet">
+    <!-- fonts -->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- customized css -->
+    <link href="assets/css/bootswatch.styles.css" rel="stylesheet">
+    <link href="assets/css/styles.css" rel="stylesheet">
+    <link href="assets/css/queries.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -21,13 +29,22 @@
     <![endif]-->
   </head>
   <body ng-app="trApp">
+    <!--[if lt IE 7]>
+    <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
     <%- body %>
+    <!-- app wide libraries -->
     <script src="dist/underscore/underscore-min.js"></script>
     <script src="dist/jquery/dist/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="dist/moment/min/moment.min.js"></script>
+    <!-- include individual plugins as needed -->
+    <script src="assets/js/min/flickity.pkgd.min.js"></script>
+    <script src="assets/js/min/waypoints.min.js"></script>
+    <script src="assets/js/jquery.fancybox.pack.js"></script>
+    <!-- main SPA -->
     <script src="dist/angular/angular.js"></script>
     <script src="dist/angular-route/angular-route.js"></script>
-    <script src="dist/moment/min/moment.min.js"></script>
     <script src="app/app.module.js"></script>
     <script src="app/app.routes.js"></script>
     <script src="dist/app.min.js"></script>
