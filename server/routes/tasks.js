@@ -13,7 +13,7 @@ module.exports = function(app, express) {
     db.Task.find({$and:[
         // find ones that are not related to current user
         {owner: {$ne: req.user._id}},
-        {assignedTo: {$ne: req.user._id}},
+        {assignedTo: {$eq: null}},
         {applicants: {$ne: req.user._id}}
       ]})
       // there are no joins in mongoose, c'mon..
