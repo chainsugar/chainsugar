@@ -60,7 +60,8 @@ passport.use(new GoogleStrategy({
           //first time user is logging in
           user = new User({
             name: profile.displayName,
-            googleId: profile.id
+            googleId: profile.id,
+            email: profile.emails[0].value
           });
           //create and save new user
           user.save(function(err, user){
@@ -86,7 +87,13 @@ module.exports = function(app) {
   app.use(passport.session());
 
   app.get('/auth/google',
-    passport.authenticate('google', { scope: 'https://www.googleapis.com/auth/plus.login' }));
+    passport.authenticate('google', {
+      scope: [
+        'https://www.googleapis.com/auth/plus.login',
+        'https://www.googleapis.com/auth/plus.profile.emails.read'
+      ]
+    })
+  );
 
   app.get('/auth/google/callback',
     passport.authenticate('google', { failureRedirect: '/#/sign-in' }),
