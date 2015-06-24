@@ -59,8 +59,8 @@ font-size: 100%; /* 1 */
 * elements.
 */
 html, button, input, select, textarea {
-font-family: sans-serif;
-font-family: 'Nunito', sans-serif;
+  font-family: sans-serif;
+  font-family: 'Gill Sans', sans-serif;
 }
 html, body {
   overflow-x: hidden;
@@ -72,7 +72,8 @@ html, body {
 */
 body {
   margin: 0;
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Gill Sans', sans-serif;
+  letter-spacing: 1px;
 }
 
 /*
