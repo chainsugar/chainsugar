@@ -3,6 +3,7 @@
 <div class="taskContainer">
 
   <div ng-show="!editMode">
+    <div>Task details</div>
     <ul>
      <li>Owner: {{ task.owner.name }}</li>
      <li>Task: {{ task.information.name }}</li>
@@ -13,7 +14,7 @@
     </ul>
 
     <button ng-show="task.isOwner && !task.assignedTo && task.applicants.length==0" ng-click="editTask()" class="btn btn-default">Edit</button>
-    <button ng-show="!task.isOwner && !task.assignedTo" ng-click="applyForTask()" class="btn btn-default">Apply</button>
+    <button ng-show="!task.isOwner && !task.assignedTo &&!task.appliedTo" ng-click="applyForTask()" class="btn btn-default">Apply</button>
 
     <div ng-show="task.assignedTo">
       <!-- assigned person -->
@@ -22,9 +23,10 @@
     </div>
     <div ng-show="!task.assignedTo">
       <!-- list of applicants -->
+      <div>List of applicants</div>
       <ul>
         <li ng-repeat="user in task.applicants">
-          {{ user.name }} - <button ng-click='assignToUser(user._id)' class="btn btn-default">Assign</button>
+          {{ user.name }} <button ng-show="task.isOwner" ng-click="assignToUser(user._id)" class="btn btn-default">Assign</button>
         </li>
       </ul>
     </div>
