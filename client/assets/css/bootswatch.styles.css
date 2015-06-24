@@ -1,4 +1,30 @@
 /* ==========================================================================
+Table Helpers
+========================================================================== */
+.blank_row
+{
+  height: 10px !important;
+  background-color: #2B3E50;
+}
+
+/* ==========================================================================
+Table
+========================================================================== */
+table {
+  margin-bottom: 30px;
+}
+.info {
+  border-bottom: 4px double white;
+  border-top: 4px double white;
+}
+.info>td {
+  background-color: #405161 !important; /* override bootstrap color */
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 2 !important;
+}
+
+/* ==========================================================================
 New Task Form
 ========================================================================== */
 
@@ -27,3 +53,6 @@ New Task Form
   width: 500px;
   height: 200px;
 }
+
+
+
