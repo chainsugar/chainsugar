@@ -1,7 +1,7 @@
 <div ng-include="'app/shared/navbar/navbar.html'"> </div>
 
 <div class="container">
-  <form class="form-horizontal" ng-submit='createTask()'>
+  <form class="form-horizontal animated fadeInDown" ng-submit='createTask()'>
     <fieldset>
       <legend class="form-header">Create a New Task</legend>
       <div class="form-group">
@@ -28,11 +28,9 @@
           <textarea class="form-control" rows="3" id="textArea" ng-model="form.description"></textarea>
           <!-- <span class="help-block">A longer block of help text that breaks onto a new line and may extend beyond one line.</span> -->
         </div>
-        <div class="container">
-          <div class="col-lg-10 col-lg-offset-2">
-            <button type="reset" class="btn btn-default" ng-click='redirectCall()'>Cancel</button>
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </div>
+        <div class="col-lg-10 col-lg-offset-2">
+          <button type="reset" class="btn btn-default" ng-click='redirectCall()'>Cancel</button>
+          <button type="submit" class="btn btn-primary">Submit</button>
         </div>
       </div>
     </fieldset>
