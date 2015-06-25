@@ -10,7 +10,7 @@
      <li>Due: {{ deadlineStr }}</li>
      <li>Description: {{ task.information.description }}</li>
      <li>Fees: {{ task.information.cost }}</li>
-     <img id="displayImage" ng-src="{{ task.information.image }}" />
+     <img id="displayImage" ng-show="task.information.image" ng-src="{{ task.information.image }}" />
     </ul>
 
     <button ng-show="task.isOwner && !task.assignedTo && task.applicants.length==0" ng-click="editTask()" class="btn btn-default">Edit</button>
