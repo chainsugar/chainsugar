@@ -1,0 +1,30 @@
+<div ng-include="'app/shared/navbar/navbar.html'"> </div>
+
+<div class="container">
+  <form class="form-horizontal">
+    <fieldset>
+      <legend>My Settings</legend>
+
+      <div class="form-group">
+        <label for="inputName" class="col-lg-2 control-label">Display Name</label>
+        <div class="col-lg-10">
+          <input type="text" class="form-control" id="inputName" placeholder="Fullname" ng-model="user.name">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="inputEmail" class="col-lg-2 control-label">Email Address</label>
+        <div class="col-lg-10">
+          <input type="text" class="form-control" id="inputEmail" placeholder="user@example.com" ng-model="user.email">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-lg-10 col-lg-offset-2">
+          <button class="btn btn-default" ng-click="save()">Save</button>
+          <span> {{ statusMessage }}</span>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+</div>

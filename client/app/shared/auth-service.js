@@ -5,24 +5,24 @@
 
   function AuthService($http){
 
-    var loginStatus = {};
+    var profile = {};
 
-    loginStatus.check = function(){
+    profile.check = function(){
       return $http({
         method: 'GET',
-        url: '/auth/google/check'
-      }).then(function(response){
-        if(response.data) {
-          console.log('User Is Logged In');
-          return true;
-        }
-      }).catch(function(err){
-        console.log('User Is Logged Out', err);
-        return false;
+        url: '/auth/profile/check'
+      });
+    };
+
+    profile.update = function(user){
+      return $http({
+        method: 'POST',
+        url: '/auth/profile/update',
+        data: user
       });
     }
 
-    return loginStatus;
+    return profile;
   }
 
 })();
