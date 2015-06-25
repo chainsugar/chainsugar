@@ -5,38 +5,9 @@ var User = require('./db').User;
 
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
-var SESSION_SECRET;
 
 var passport = require('passport');
 var GoogleStrategy  = require('passport-google-oauth').OAuth2Strategy;
-var GOOGLE_SECRETS;
-
-if(process.env.NODE_ENV === 'production' ) {
-  //store the client id and secret in environment variable
-  GOOGLE_SECRETS = {
-    id: process.env.GOOGLE_APP_ID,
-    secret: process.env.GOOGLE_APP_SECRET,
-    url: process.env.GOOGLE_APP_CALLBACK_URL
-  };
-
-  //a long text string for signing session cookies
-  SESSION_SECRET = process.env.SESSION_SECRET;
-} else {
-
-  try {
-    GOOGLE_SECRETS = require('../secrets/google.json');
-  } catch(e) {
-    console.error("== Warning == missing 'secrets/google.json' file. == see README");
-    process.exit();
-  }
-
-  try {
-    SESSION_SECRET = require('../secrets/session.json').secret;
-  } catch (e) {
-    SESSION_SECRET = "w34587230598dflskjf";//default
-  }
-
-}
 
 passport.serializeUser(function(user, done) {
   done(null, user);
@@ -47,9 +18,9 @@ passport.deserializeUser(function(obj, done) {
 });
 
 passport.use(new GoogleStrategy({
-      clientID: GOOGLE_SECRETS.id,
-      clientSecret: GOOGLE_SECRETS.secret,
-      callbackURL: GOOGLE_SECRETS.url
+      clientID: config.GOOGLE_APP_ID,
+      clientSecret: config.GOOGLE_APP_SECRET,
+      callbackURL: config.GOOGLE_APP_CALLBACK_URL
     },
     function(accessToken, refreshToken, profile, done) {
       User.findOne({ googleId: profile.id }).exec(function (err, user) {
@@ -75,7 +46,7 @@ passport.use(new GoogleStrategy({
 module.exports = function(app) {
 
   app.use(session({
-    secret: SESSION_SECRET,
+    secret: config.SESSION_SECRET,
     store: new MongoStore({
       url: config.MONGODB_URL
     }),
