@@ -10,8 +10,8 @@ angular.module('trApp', ['ngRoute'])
       }
 
       if (next.$$route && !next.$$route.publicAccess){
-        AuthService.check().then(function(loggedIn){
-          if(!loggedIn) $location.path('/sign-in');
+        AuthService.check().catch(function(){
+          $location.path('/sign-in');
         });
       }
 

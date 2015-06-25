@@ -113,7 +113,7 @@ module.exports = function(app) {
   });
 
   //api to check on client side if session is authenticated
-  app.get('/auth/google/check', function(req, res, next){
+  app.get('/auth/profile/check', function(req, res, next){
     if(req.isAuthenticated()){
       res.status(200).send(req.user);
     } else {
@@ -121,4 +121,36 @@ module.exports = function(app) {
     }
   });
 
+  app.post('/auth/profile/update', function(req, res){
+    if(req.isAuthenticated()) {
+      User.findById(req.user._id)
+        .exec(function(err, user){
+          if(err) {
+            return res.status(500).end();
+          }
+          if(user){
+            //TODO: there should be an email verification process!
+            //set user data on model
+            user.name = req.body.name;
+            user.email = req.body.email;
+            //update the session user data
+            req.user.name = user.name;
+            req.user.email = user.email;
+            user.save(function(err){
+              if(err){
+                return res.status(500).end();
+              }
+              res.status(201).end();
+            });
+          }else{
+            return res.status(404).end();
+          }
+        })
+
+    } else {
+      res.status(401).end();
+    }
+  });
+
 };
+
