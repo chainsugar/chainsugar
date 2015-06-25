@@ -28,6 +28,10 @@
           <textarea class="form-control" rows="3" id="textArea" ng-model="form.description"></textarea>
           <!-- <span class="help-block">A longer block of help text that breaks onto a new line and may extend beyond one line.</span> -->
         </div>
+        <label for="inputImage" class="col-lg-2 control-label">Image</label>
+        <div class="col-lg-10">
+          <input type="text" class="form-control" id="inputImage" placeholder="Image Url" ng-model="form.image">
+        </div>
         <div class="col-lg-10 col-lg-offset-2">
           <button type="reset" class="btn btn-default" ng-click='redirectCall()'>Cancel</button>
           <button type="submit" class="btn btn-primary">Submit</button>

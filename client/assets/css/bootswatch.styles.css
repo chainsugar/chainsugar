@@ -63,3 +63,12 @@ Form
   width: 500px;
   height: 200px;
 }
+#inputImage {
+  width: 500px;
+}
+
+.hero {
+  background-image: url("http://media.giphy.com/media/NKeVGRQ8Uj7Da/giphy.gif");
+  background-repeat: no-repeat;
+  background-size: 100%;
+}
