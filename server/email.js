@@ -31,6 +31,8 @@ if (sendGridUsername && sendGridPassword) {
 } else {
 
   module.exports.send = function(opt, callback) {
+    if(!callback) return;
+
     process.nextTick(function(){
       callback();
     });

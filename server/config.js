@@ -16,7 +16,10 @@ if (process.env.NODE_ENV === 'production') {
 
     //azure sengrid cloud email delivery service
     "SENDGRID_USERNAME": process.env.SENDGRID_USERNAME,
-    "SENDGRID_PASSWORD": process.env.SENDGRID_PASSWORD
+    "SENDGRID_PASSWORD": process.env.SENDGRID_PASSWORD,
+
+    //website root path - example: http://taskbunny.azurewebsites.net
+    "SITE_ROOT": process.env.SITE_ROOT
   };
 
 } else {
