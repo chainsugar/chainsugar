@@ -122,6 +122,11 @@ module.exports = function(app) {
   });
 
   app.post('/auth/profile/update', function(req, res){
+    //prevent setting a blank name - todo: use a regex
+    if(!req.body.name) {
+      return res.status(403).end();
+    }
+
     if(req.isAuthenticated()) {
       User.findById(req.user._id)
         .exec(function(err, user){
@@ -129,13 +134,14 @@ module.exports = function(app) {
             return res.status(500).end();
           }
           if(user){
-            //TODO: there should be an email verification process!
+            //TODO: there should be an email verification process
+            //before allowing user to update their email address
             //set user data on model
             user.name = req.body.name;
-            user.email = req.body.email;
+            //user.email = req.body.email;
             //update the session user data
             req.user.name = user.name;
-            req.user.email = user.email;
+            //req.user.email = user.email;
             user.save(function(err){
               if(err){
                 return res.status(500).end();
