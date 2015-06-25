@@ -10,6 +10,7 @@
      <li>Due: {{ deadlineStr }}</li>
      <li>Description: {{ task.information.description }}</li>
      <li>Fees: {{ task.information.cost }}</li>
+     <img id="displayImage" ng-src="{{ task.information.image }}" />
     </ul>
 
     <button ng-show="task.isOwner && !task.assignedTo && task.applicants.length==0" ng-click="editTask()" class="btn btn-default">Edit</button>
@@ -57,9 +58,14 @@
         <label for="textArea" class="col-lg-2 control-label">Description</label>
         <div class="col-lg-10">
           <textarea class="form-control" rows="3" id="textArea" ng-model="task.information.description"></textarea>
-          <span class="help-block"></span>
         </div>
-        <div class="contianer">
+        <label for="inputImage" class="col-lg-2 control-label">Image</label>
+        <div class="col-lg-10">
+          <input type="text" class="form-control" id="inputImage" placeholder="Image Url Here" ng-model="task.information.image">
+        </div>
+      </div>
+        <span class="help-block"></span>
+        <div class="container">
           <div class="col-lg-10 col-lg-offset-2">
             <button class="btn btn-primary" ng-click='updateTask()'>Update</button>
             <button class="btn btn-danger" ng-click='deleteTask()'>Delete</button>
