@@ -1,27 +1,64 @@
-.jumbotron {
-  width: 500px;
-  display: block;
-  margin: 0 auto;
-  margin-top: 100px;
+/* ==========================================================================
+Navbar
+========================================================================== */
+.navbar-brand>img {
+  width: 50px;
+  margin-top: -3px;
+}
+
+
+/* ==========================================================================
+Table Helpers
+========================================================================== */
+.blank_row
+{
+  height: 10px !important;
+  background-color: #2B3E50;
+}
+
+/* ==========================================================================
+Table
+========================================================================== */
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+  margin-bottom: 30px;
+}
+table tr {
+  letter-spacing: 0;
+}
+.info {
+  border-bottom: 4px double white;
+  border-top: 4px double white;
+}
+.info>td {
+  background-color: #405161 !important; /* override bootstrap color */
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 2 !important;
+}
+
+/* ==========================================================================
+Form
+========================================================================== */
+.form-header {
+  width: 223px;
   text-align: center;
 }
 
+/* new task form */
 #inputName, #inputCity {
   width: 200px;
 }
-
 #inputCost, #inputDate, #textArea, #inputCity {
   margin-bottom: 20px;
 }
-
 #inputCost {
   width: 100px;
 }
-
 #inputDate {
   width: 200px;
 }
-
 #textArea {
   width: 500px;
   height: 200px;

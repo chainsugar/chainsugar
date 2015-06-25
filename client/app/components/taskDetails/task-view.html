@@ -1,9 +1,8 @@
 <div ng-include="'app/shared/navbar/navbar.html'"> </div>
-<!--this page should display the user's tasks // tasks that have been assigned-->
-<div class="taskContainer">
 
+<div class="container">
   <div ng-show="!editMode">
-    <div>Task details - status: {{ task.complete ? "Completed" : "Pending"}} </div>
+    <div>Task Status: <em>{{ task.complete ? "Completed" : "Pending"}}</em> </div>
     <ul>
      <li>Owner: {{ task.owner.name }}</li>
      <li>Task: {{ task.information.name }}</li>
@@ -21,6 +20,7 @@
       <div>Task is assigned to: {{ task.assignedTo.name }}</div>
       <button ng-show="task.isOwner && !task.complete" ng-click="taskComplete()" class="btn btn-default">Set Complete</button>
     </div>
+    <hr>
     <div ng-show="!task.assignedTo">
       <!-- list of applicants -->
       <div>List of applicants</div>
@@ -34,7 +34,7 @@
 
   <form class="form-horizontal" ng-show='editMode'>
     <fieldset>
-      <legend>{{ task.information.name }} from {{ task.owner.name }}</legend>
+      <legend class="form-header">{{ task.information.name }} from {{ task.owner.name }}</legend>
       <div class="form-group">
         <label for="inputName" class="col-lg-2 control-label">Name of Task</label>
         <div class="col-lg-10">
@@ -59,7 +59,7 @@
           <textarea class="form-control" rows="3" id="textArea" ng-model="task.information.description"></textarea>
           <span class="help-block"></span>
         </div>
-        <div class="form-group">
+        <div class="contianer">
           <div class="col-lg-10 col-lg-offset-2">
             <button class="btn btn-primary" ng-click='updateTask()'>Update</button>
             <button class="btn btn-danger" ng-click='deleteTask()'>Delete</button>
@@ -69,5 +69,4 @@
       </div>
     </fieldset>
   </form>
-
 </div>
