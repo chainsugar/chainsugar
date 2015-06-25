@@ -30,6 +30,10 @@
             templateUrl: 'app/components/taskSearch/taskSearch.html',
             controller: 'TaskSearchController'
         })
+        .when('/settings', {
+            templateUrl: 'app/components/userSettings/template.html',
+            controller: 'SettingsController'
+        })
         .otherwise({redirectTo: '/'});
 
     });
