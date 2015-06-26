@@ -2,7 +2,7 @@ var express = require('express');
 var partials = require('express-partials');
 var bodyParser = require('body-parser');
 var path = require('path');
-var sessionAuth = require('./auth');
+var sessionAuth = require('./routes/auth');
 var tasksAPI = require('./routes/tasks');
 
 var app = express();
