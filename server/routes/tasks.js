@@ -1,6 +1,7 @@
 var db = require("../db/");
 var _ = require("underscore");
 var strToMongooseObjectId = require("mongoose").Types.ObjectId;
+var notify = require("../notify");
 
 module.exports = function(app, express) {
 
@@ -220,6 +221,8 @@ module.exports = function(app, express) {
           task.assignedTo = new strToMongooseObjectId(userId);
           task.save(function(){
             res.status(201).end();
+            //notify applicant that they have been assigned the task
+            notify.taskAssigned(taskId);
           });
         } else {
           res.status(403).end();
@@ -251,6 +254,8 @@ module.exports = function(app, express) {
             task.applicants.push(new strToMongooseObjectId(req.user._id));
             task.save(function(){
               res.status(201).end();
+              //notify owner of task of a new application
+              notify.newApplication(taskId);
             });
           } else{
             res.status(403).end();
