@@ -2,6 +2,7 @@ var config = require('./config.js');
 var fs = require('fs');
 var path = require('path');
 var User = require('./db').User;
+var moment = require('moment');
 
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
@@ -34,7 +35,8 @@ passport.use(new GoogleStrategy({
           user = new User({
             name: profile.displayName,
             googleId: profile.id,
-            email: profile.emails[0].value
+            email: profile.emails[0].value,
+            memberSince: new Date()
           });
           //create and save new user
           user.save(function(err, user){
@@ -115,6 +117,10 @@ module.exports = function(app) {
             //update the session user data
             req.user.name = user.name;
             //req.user.email = user.email;
+            user.preferredEmail = req.body.preferredEmail;
+            user.phone = req.body.phone;
+            user.city = req.body.city;
+
             user.save(function(err){
               if(err){
                 return res.status(500).end();
