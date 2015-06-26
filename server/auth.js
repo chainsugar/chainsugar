@@ -10,11 +10,13 @@ var passport = require('passport');
 var GoogleStrategy  = require('passport-google-oauth').OAuth2Strategy;
 
 passport.serializeUser(function(user, done) {
-  done(null, user);
+  done(null, user._id);
 });
 
-passport.deserializeUser(function(obj, done) {
-  done(null, obj);
+passport.deserializeUser(function(id, done) {
+  User.findById(id, function(err, user) {
+    done(err, user);
+  });
 });
 
 passport.use(new GoogleStrategy({
@@ -130,4 +132,3 @@ module.exports = function(app) {
   });
 
 };
-
