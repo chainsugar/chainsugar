@@ -47,10 +47,10 @@ Form
 }
 
 /* new task form */
-#inputName, #inputCity {
+#inputName, #inputCity, #inputCity, #inputPhone, #inputEmail {
   width: 200px;
 }
-#inputCost, #inputDate, #textArea, #inputCity {
+#inputCost, #inputDate, #textArea, {
   margin-bottom: 20px;
 }
 #inputCost {
@@ -67,8 +67,8 @@ Form
   width: 500px;
 }
 
-.hero {
+/*.hero {
   background-image: url("http://media.giphy.com/media/NKeVGRQ8Uj7Da/giphy.gif");
   background-repeat: no-repeat;
   background-size: 100%;
-}
+}*/

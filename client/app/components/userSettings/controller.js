@@ -8,8 +8,7 @@
     $scope.user = {};
 
     AuthService.check().then(function(response){
-      $scope.user.name = response.data.name;
-      $scope.user.email = response.data.email;
+      $scope.user = response.data;
     });
 
     $scope.save = function(){
