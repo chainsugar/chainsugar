@@ -1,7 +1,7 @@
-var config = require('./config.js');
+var config = require('../config.js');
 var fs = require('fs');
 var path = require('path');
-var User = require('./db').User;
+var User = require('../db').User;
 var moment = require('moment');
 
 var session = require('express-session');
